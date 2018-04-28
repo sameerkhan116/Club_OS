@@ -1,7 +1,7 @@
 import React from 'react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
-import { Container, Loader, List } from 'semantic-ui-react';
+import { Container, Message, Icon, List } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 const user = u => (
@@ -19,7 +19,13 @@ const user = u => (
 const Home = ({ data: { loading, allUsers } }) => (
   loading || !allUsers ?
     (
-      <Loader indeterminate>Loading...</Loader>
+      <Message icon>
+        <Icon name="circle notched" loading />
+        <Message.Content>
+          <Message.Header>Just one second</Message.Header>
+            We are fetching that content for you.
+        </Message.Content>
+      </Message>
     ) : (
       <Container>
         <List divided verticalAlign="middle">

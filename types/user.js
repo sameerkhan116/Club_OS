@@ -3,8 +3,11 @@ export default `
     id: Int!
     firstname: String!
     lastname: String!
-    usernmae: String!
     email: String!
+    createdAt: String!
+    age: Int!
+    gender: String!
+    location: Int!
   }
 
   type RegisterResponse {
@@ -14,11 +17,11 @@ export default `
   }
 
   type Query {
-    allUsers: User!
+    allUsers: [User!]!
     user(id: Int!): User!
   }
 
   type Mutation {
-    register(firstname: String!, lastname: String!, email: String!, username: String!): RegisterResponse!
+    register(firstname: String!, lastname: String!, gender: String!, age: Int!, location: Int!, email: String!): RegisterResponse!
   }
 `;

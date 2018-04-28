@@ -11,7 +11,7 @@ export default(sequelize, DataTypes) => {
         },
         notEmpty: {
           args: true,
-          msg: 'This field is required',
+          msg: 'The first name is requred to complete registration',
         },
       },
     },
@@ -24,29 +24,56 @@ export default(sequelize, DataTypes) => {
         },
         notEmpty: {
           args: true,
-          msg: 'This field is required',
+          msg: 'The lastname is required to complete registration',
         },
       },
     },
-    // username is string, can be alphanumeric and must be atleast 5 chraracters long and atmost 25
-    username: {
+    gender: {
       type: DataTypes.STRING,
-      unique: true,
       validate: {
-        isAlphanumeric: {
+        notEmpty: {
           args: true,
-          msg: 'The username can only contain letters and numbers',
+          msg: 'The gender is required to complete registratio',
         },
-        len: {
-          args: [5, 25],
-          msg: 'The username needs to be between 5 and 25 characters long',
+      },
+    },
+    age: {
+      type: DataTypes.INTEGER,
+      validate: {
+        isInt: {
+          args: true,
+          message: 'Please enter your age in numbers',
+        },
+        min: {
+          args: 16,
+          message: 'You must be atlest 16 years old to join this gym',
+        },
+        max: {
+          args: 80,
+          message: 'You cannot be older than 80',
+        },
+      },
+    },
+    location: {
+      type: DataTypes.INTEGER,
+      validate: {
+        notEmpty: {
+          args: true,
+          msg: 'The location is required to complete registration',
+        },
+        isInt: {
+          args: true,
+          msg: 'Please enter your area code in numbers',
         },
       },
     },
     // the email should be of type email and not empty
     email: {
       type: DataTypes.STRING,
-      unique: true,
+      unique: {
+        args: true,
+        msg: 'That email has already been used',
+      },
       validate: {
         isEmail: {
           args: true,
@@ -54,7 +81,7 @@ export default(sequelize, DataTypes) => {
         },
         notEmpty: {
           args: true,
-          msg: 'This field is required',
+          msg: 'The email is required to complete registratio',
         },
       },
     },

@@ -2,6 +2,18 @@ export default (sequelize, DataTypes) => {
   // the agreement model with table name 'agreement'
   const Agreement = sequelize.define('agreement', {
     // the number of session the user has. min value is set to 0.
+    clubId: {
+      type: DataTypes.STRING,
+      validate: {
+        notEmpty: {
+          args: true,
+          message: 'The club ID is required',
+        },
+      },
+    },
+    due: DataTypes.FLOAT,
+    active: DataTypes.BOOLEAN,
+    renew: DataTypes.BOOLEAN,
     quantity: {
       type: DataTypes.INTEGER,
       validate: {
@@ -11,9 +23,8 @@ export default (sequelize, DataTypes) => {
         },
       },
     },
-    // the current status of the customer depending on the agreement type
-    status: DataTypes.STRING,
-    // for the purchase date, we can use the create date
+    agreement: DataTypes.STRING,
+    alert: DataTypes.STRING,
   });
 
   // associate the agreement with the User model since every user will have

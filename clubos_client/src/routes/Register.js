@@ -10,15 +10,13 @@ class Register extends Component {
     email: '',
     age: '',
     gender: 'Male',
-    weight: '',
-    height: '',
+    location: '',
     firstnameError: '',
     lastnameError: '',
     emailError: '',
     ageError: '',
     genderError: '',
-    heightError: '',
-    weightError: '',
+    locationError: '',
   };
 
   onSubmit = async () => {
@@ -26,13 +24,15 @@ class Register extends Component {
       firstnameError: '',
       lastnameError: '',
       emailError: '',
+      locationError: '',
     });
+
     const {
-      firstname, lastname, email, gender, age, height, weight,
+      firstname, lastname, email, gender, age, location,
     } = this.state;
     const response = await this.props.mutate({
       variables: {
-        firstname, lastname, email, gender, age, height, weight,
+        firstname, lastname, email, gender, age, location,
       },
     });
 
@@ -66,9 +66,9 @@ class Register extends Component {
 
   render() {
     const {
-      firstname, lastname, email, gender, age, height, weight,
+      firstname, lastname, email, gender, age, location,
       firstnameError, lastnameError, emailError, genderError,
-      ageError, heightError, weightError,
+      ageError, locationError,
     } = this.state;
 
     const errorList = [];
@@ -77,8 +77,7 @@ class Register extends Component {
     if (emailError) errorList.push(emailError);
     if (genderError) errorList.push(genderError);
     if (ageError) errorList.push(ageError);
-    if (heightError) errorList.push(heightError);
-    if (weightError) errorList.push(weightError);
+    if (locationError) errorList.push(locationError);
 
     return (
       <Container text>
@@ -141,27 +140,16 @@ class Register extends Component {
             <Form.Input
               width={6}
               type="number"
-              placeholder="Weight"
-              value={weight}
-              label="Weight (in kgs)"
-              name="weight"
+              placeholder="Area Code"
+              value={location}
+              label="Area Code"
+              name="location"
               onChange={this.onChange}
-              error={!!weightError}
-              required
-            />
-            <Form.Input
-              width={6}
-              type="number"
-              placeholder="Height"
-              value={height}
-              label="Height (in inches)"
-              name="height"
-              onChange={this.onChange}
-              error={!!heightError}
+              error={!!locationError}
               required
             />
           </Form.Group>
-          <Button size="large" floated="right" type="submit" primary>Choose a plan →</Button>
+          <Button size="large" floated="right" type="submit" primary>Next steps →</Button>
         </Form>
         {errorList.length ? (
           <Message error header="Something went wrong" list={errorList} />
@@ -172,8 +160,8 @@ class Register extends Component {
 }
 
 const ADD_USER = gql`
-  mutation($firstname: String!, $lastname: String!, $email: String!, $gender: String!, $age: Int!, $height: Int!, $weight: Int!) {
-    register(firstname: $firstname, lastname: $lastname, email: $email, gender: $gender, age: $age, height: $height, weight: $weight) {
+  mutation($firstname: String!, $lastname: String!, $email: String!, $gender: String!, $age: Int!, $location: Int!) {
+    register(firstname: $firstname, lastname: $lastname, email: $email, gender: $gender, age: $age, location: $location) {
       ok
       user {
         id

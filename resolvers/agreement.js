@@ -2,18 +2,16 @@ import formatErrors from '../formatErrors';
 
 export default {
   Query: {
-    allUsers: (parent, args, { models }) =>
-      models.User.findAll(),
-    user: (parent, { id }, { models }) =>
-      models.User.findOne({ where: { id } }),
+    findAgreement: (parent, { userId }, { models }) =>
+      models.Agreement.findOne({ where: { userId } }),
   },
   Mutation: {
-    register: async (parent, args, { models }) => {
+    validateAgreement: async (parent, args, { models }) => {
       try {
-        const user = await models.User.create(args);
+        const agreement = await models.Agreement.create(args);
         return {
           ok: true,
-          user,
+          agreement,
         };
       } catch (err) {
         return {
