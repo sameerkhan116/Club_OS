@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const user = u => (
   <List.Item key={`${u.id}`}>
     <List.Content floated="right">
-      {`${u.createdAt}`}
+      <strong>Join date:</strong> {`${u.createdAt}`}
     </List.Content>
     <List.Content>
       <List.Header as={Link} to={`/user/${u.id}`}>{`${u.firstname} ${u.lastname}`}</List.Header>
@@ -27,7 +27,7 @@ const Home = ({ data: { loading, allUsers } }) => (
         </Message.Content>
       </Message>
     ) : (
-      <Container>
+      <Container text>
         <List divided verticalAlign="middle">
           {allUsers.map(user)}
         </List>

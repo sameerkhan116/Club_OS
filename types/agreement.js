@@ -3,13 +3,11 @@ export default `
     id: Int!
     clubId: Int!
     due: Float!
-    active: Boolean!
-    renew: Boolean!
-    quantity: Int!
-    agreement: String!
-    alert: String!
-    status: String!    
+    alert: String
     createdAt: String!
+    status: String!
+    quantity: Int!
+    endAt: String!
   }
 
   type ValidateResponse {
@@ -18,11 +16,23 @@ export default `
     error: [Error!]
   }
 
+  type AgreementResponse {
+    agreement: Agreement!
+    userType: String!
+  }
+
   type Query {
-    findAgreement(userId: Int!): Agreement!
+    findAgreement(userId: Int!): AgreementResponse!
+  }
+
+  type Opportunity {
+    userId: Int!
+    quantity: Int!
+    status: String!
   }
 
   type Mutation {
-    validateAgreement(userId: Int!, clubId: Int!, due: Float!, active: Boolean!, renew: Boolean!, quantity: Int!, agreement: String!, alert: String!): ValidateResponse!
+    validateAgreement(userId: Int!, clubId: Int!, due: Float!,  alert: String, endAt: String!, status: String!): ValidateResponse!
+    addSession(userId: Int!, added: Int!): Opportunity! 
   }
 `;

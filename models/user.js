@@ -85,6 +85,7 @@ export default(sequelize, DataTypes) => {
         },
       },
     },
+    createdAt: DataTypes.DATEONLY,
   });
 
   // return this created User model

@@ -16,7 +16,7 @@ const Routes = () => (
         <Route exact path="/register" component={Register} />
         <Route exact path="/user" render={() => <Redirect to="/" />} />
         <Route exact path="/user/:id" component={Profile} />
-        <Route exact path="/select-plan" component={SelectPlan} />
+        <Route exact path="/select-plan/:id" component={SelectPlan} />
       </Switch>
     </div>
   </Router>

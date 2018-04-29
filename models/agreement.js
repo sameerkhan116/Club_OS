@@ -12,19 +12,22 @@ export default (sequelize, DataTypes) => {
       },
     },
     due: DataTypes.FLOAT,
-    active: DataTypes.BOOLEAN,
-    renew: DataTypes.BOOLEAN,
     quantity: {
       type: DataTypes.INTEGER,
+      defaultValue: 0,
+    },
+    alert: DataTypes.STRING,
+    createdAt: DataTypes.DATEONLY,
+    status: {
+      type: DataTypes.STRING,
       validate: {
-        min: {
-          args: 0,
-          msg: 'You don\'t have any more sessions',
+        notEmpty: {
+          args: true,
+          msg: 'The current customer status is required',
         },
       },
     },
-    agreement: DataTypes.STRING,
-    alert: DataTypes.STRING,
+    endAt: DataTypes.STRING,
   });
 
   // associate the agreement with the User model since every user will have

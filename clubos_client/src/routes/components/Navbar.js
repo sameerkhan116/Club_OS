@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Menu, Container } from 'semantic-ui-react';
+import { Menu, Container, Image } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 export default class Navbar extends Component {
@@ -15,7 +15,7 @@ export default class Navbar extends Component {
       <Menu inverted size="huge">
         <Container>
           <Menu.Item>
-            <img src="https://www.club-os.com/hubfs/Website%20Images/logo-white.png?t=1524854663136" alt="ClubOS" />
+            <Image size="tiny" src="https://www.club-os.com/hubfs/Website%20Images/logo-white.png?t=1524854663136" alt="ClubOS" />
           </Menu.Item>
           <Menu.Item
             name="home"

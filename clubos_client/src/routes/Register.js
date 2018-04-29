@@ -1,7 +1,34 @@
 import React, { Component } from 'react';
-import { Form, Header, Container, Button, Message, Radio } from 'semantic-ui-react';
+import { Form, Header, Container, Button, Message, Radio, Segment } from 'semantic-ui-react';
 import gql from 'graphql-tag';
 import { graphql } from 'react-apollo';
+
+const ALL_USERS = gql`
+  {
+    allUsers {
+      id
+      firstname
+      lastname
+      email
+      createdAt
+    }
+  }
+`;
+
+const ADD_USER = gql`
+  mutation($firstname: String!, $lastname: String!, $email: String!, $gender: String!, $age: Int!, $location: Int!) {
+    register(firstname: $firstname, lastname: $lastname, email: $email, gender: $gender, age: $age, location: $location) {
+      ok
+      user {
+        id
+      }
+      error {
+        path
+        message
+      }
+    }
+  }
+`;
 
 class Register extends Component {
   state = {
@@ -30,9 +57,38 @@ class Register extends Component {
     const {
       firstname, lastname, email, gender, age, location,
     } = this.state;
+
     const response = await this.props.mutate({
       variables: {
         firstname, lastname, email, gender, age, location,
+      },
+      optimisticResponse: {
+        register: {
+          __typename: 'Mutation',
+          ok: true,
+          user: {
+            __typename: 'User',
+            id: -1,
+            firstname,
+            lastname,
+            email,
+            gender,
+            age,
+            location,
+          },
+          error: {
+            __typename: 'Error',
+            path: '',
+            message: '',
+          },
+        },
+      },
+      update: (store, { data: { register: { ok, user } } }) => {
+        if (!ok) return;
+        const data = store.readQuery({ query: ALL_USERS });
+        console.log(data);
+        data.allUsers.push(user);
+        store.writeQuery({ query: ALL_USERS, data });
       },
     });
 
@@ -81,97 +137,84 @@ class Register extends Component {
 
     return (
       <Container text>
-        <Form onSubmit={this.onSubmit}>
-          <Header as="h1" textAlign="center">Add a new Customer</Header>
-          <Form.Input
-            fluid
-            type="text"
-            label="First Name"
-            placeholder="First Name"
-            value={firstname}
-            name="firstname"
-            onChange={this.onChange}
-            error={!!firstnameError}
-            required
-          />
-          <Form.Input
-            fluid
-            type="text"
-            label="Last Name"
-            placeholder="Last Name"
-            value={lastname}
-            name="lastname"
-            onChange={this.onChange}
-            error={!!lastnameError}
-            required
-          />
-          <Form.Input
-            fluid
-            type="email"
-            label="Email"
-            placeholder="Email"
-            value={email}
-            name="email"
-            onChange={this.onChange}
-            error={!!emailError}
-            required
-          />
-          <Form.Field>
-            <label htmlFor="gender">Gender</label>
-          </Form.Field>
-          <Form.Field>
-            <Radio label="Male" value="Male" checked={gender === 'Male'} onChange={this.radioChange} />
-          </Form.Field>
-          <Form.Field>
-            <Radio label="Female" type="radio" value="Female" checked={gender === 'Female'} onChange={this.radioChange} />
-          </Form.Field>
-          <Form.Group>
+        <Segment>
+          <Form onSubmit={this.onSubmit}>
+            <Header as="h1" textAlign="center">Add a new Customer</Header>
             <Form.Input
-              width={6}
-              type="number"
-              placeholder="Age"
-              value={age}
-              label="Age (in years)"
-              name="age"
+              fluid
+              type="text"
+              label="First Name"
+              placeholder="First Name"
+              value={firstname}
+              name="firstname"
               onChange={this.onChange}
-              error={!!ageError}
+              error={!!firstnameError}
               required
             />
             <Form.Input
-              width={6}
-              type="number"
-              placeholder="Area Code"
-              value={location}
-              label="Area Code"
-              name="location"
+              fluid
+              type="text"
+              label="Last Name"
+              placeholder="Last Name"
+              value={lastname}
+              name="lastname"
               onChange={this.onChange}
-              error={!!locationError}
+              error={!!lastnameError}
               required
             />
-          </Form.Group>
-          <Button size="large" floated="right" type="submit" primary>Next steps →</Button>
-        </Form>
-        {errorList.length ? (
-          <Message error header="Something went wrong" list={errorList} />
-        ) : null}
+            <Form.Input
+              fluid
+              type="email"
+              label="Email"
+              placeholder="Email"
+              value={email}
+              name="email"
+              onChange={this.onChange}
+              error={!!emailError}
+              required
+            />
+            <Form.Field>
+              <label htmlFor="gender">Gender</label>
+            </Form.Field>
+            <Form.Field>
+              <Radio label="Male" value="Male" checked={gender === 'Male'} onChange={this.radioChange} />
+            </Form.Field>
+            <Form.Field>
+              <Radio label="Female" type="radio" value="Female" checked={gender === 'Female'} onChange={this.radioChange} />
+            </Form.Field>
+            <Form.Group>
+              <Form.Input
+                width={6}
+                type="number"
+                placeholder="Age"
+                value={age}
+                label="Age (in years)"
+                name="age"
+                onChange={this.onChange}
+                error={!!ageError}
+                required
+              />
+              <Form.Input
+                width={6}
+                type="number"
+                placeholder="Area Code"
+                value={location}
+                label="Area Code"
+                name="location"
+                onChange={this.onChange}
+                error={!!locationError}
+                required
+              />
+              <Button widths={6} size="large" floated="right" type="submit" primary>Next steps →</Button>
+            </Form.Group>
+          </Form>
+          {errorList.length ? (
+            <Message error header="Something went wrong" list={errorList} />
+          ) : null}
+        </Segment>
       </Container>
     );
   }
 }
-
-const ADD_USER = gql`
-  mutation($firstname: String!, $lastname: String!, $email: String!, $gender: String!, $age: Int!, $location: Int!) {
-    register(firstname: $firstname, lastname: $lastname, email: $email, gender: $gender, age: $age, location: $location) {
-      ok
-      user {
-        id
-      }
-      error {
-        path
-        message
-      }
-    }
-  }
-`;
 
 export default graphql(ADD_USER)(Register);

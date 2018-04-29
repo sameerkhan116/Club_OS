@@ -47,8 +47,8 @@ const Profile = ({ match: { params: { id } } }) => (
         const {
           firstname, lastname, email, createdAt, age, gender, location,
         } = data.user;
-        return (
-          <Container text>
+        return [
+          <Container text key="profile">
             <Header as="h1" textAlign="center">Customer Details</Header>
             <Card centered fluid>
               <Card.Content>
@@ -73,17 +73,18 @@ const Profile = ({ match: { params: { id } } }) => (
                 </Card.Description>
               </Card.Content>
               <Card.Content extra>
-                <Button color="green" fluid as={Link} to="/select-plan">Modify current plan or choose a new one →</Button>
+                <Button color="green" fluid as={Link} to={`/select-plan/${id}`}>Modify current plan or choose a new one →</Button>
               </Card.Content>
             </Card>
-            <hr />
+          </Container>,
+          <hr key="tab" />,
+          <Container text key="plan">
             <Plan id={id} />
-          </Container>
-        );
+          </Container>,
+        ];
       }}
     </Query>
   </Container>
 );
 
-// export default graphql(USER)(Profile);
 export default Profile;
