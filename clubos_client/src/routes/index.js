@@ -5,6 +5,7 @@ import Home from './Home';
 import Register from './Register';
 import Profile from './Profile';
 import SelectPlan from './SelectPlan';
+import Status from './Status';
 import Navbar from './components/Navbar';
 
 const Routes = () => (
@@ -14,6 +15,7 @@ const Routes = () => (
       <Switch>
         <Route exact path="/" component={Home} />
         <Route exact path="/register" component={Register} />
+        <Route exact path="/status/:type" component={Status} />
         <Route exact path="/user" render={() => <Redirect to="/" />} />
         <Route exact path="/user/:id" component={Profile} />
         <Route exact path="/select-plan/:id" component={SelectPlan} />

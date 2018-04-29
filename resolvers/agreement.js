@@ -52,7 +52,7 @@ export default {
       console.log(quantity);
       if (quantity === 0 && added === 1) {
         status = 'drop-in';
-      } else if (quantity === 1 && added === 1) {
+      } else if (quantity === 1 || added === 1) {
         status = 'renewal opp';
       } else if (quantity > 2) {
         status = 'active';

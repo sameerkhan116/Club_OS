@@ -6,6 +6,7 @@ export default `
     email: String!
     createdAt: String!
     age: Int!
+    agreement: Agreement
     gender: String!
     location: Int!
   }
@@ -17,8 +18,9 @@ export default `
   }
 
   type Query {
-    allUsers: [User!]!
+    allUsers: [User!]
     user(id: Int!): User!
+    statusUsers(type: String!): [User!]
   }
 
   type Mutation {

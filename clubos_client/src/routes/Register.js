@@ -10,6 +10,9 @@ const ALL_USERS = gql`
       firstname
       lastname
       email
+      agreement {
+        status
+      }
       createdAt
     }
   }

@@ -1,20 +1,20 @@
 import Sequelize from 'sequelize'; // to sequelize multiple dbs
 
 // url for elephantSQL DB
-// const url = 'postgres://kaxwjmdw:HoaXGkjJ6h_FMqUtCJ-KaJx1GkP7FimC@pellefant.db.elephantsql.com:5432/kaxwjmdw';
+const url = 'postgres://kaxwjmdw:HoaXGkjJ6h_FMqUtCJ-KaJx1GkP7FimC@pellefant.db.elephantsql.com:5432/kaxwjmdw';
 
 // the db name (created in psql locally for now)
-// const sequelize = new Sequelize(url, {
-//   host: 'localhost', // currently hosted locally
-//   dialect: 'postgres', // the langugae for the db
-//   operatorsAliases: Sequelize.Op, // to get rid of deprecated error
-// });
-
-const sequelize = new Sequelize('clubos', 'root', '12345', {
-  host: 'localhost',
-  dialect: 'postgres',
-  operatorsAliases: Sequelize.Op,
+const sequelize = new Sequelize(url, {
+  host: 'localhost', // currently hosted locally
+  dialect: 'postgres', // the langugae for the db
+  operatorsAliases: Sequelize.Op, // to get rid of deprecated error
 });
+
+// const sequelize = new Sequelize('clubos', 'root', '12345', {
+//   host: 'localhost',
+//   dialect: 'postgres',
+//   operatorsAliases: Sequelize.Op,
+// });
 
 // combine the modularized models here and give them names as needed
 const db = {

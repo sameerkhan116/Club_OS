@@ -86,7 +86,17 @@ export default(sequelize, DataTypes) => {
       },
     },
     createdAt: DataTypes.DATEONLY,
+    status: DataTypes.STRING,
   });
+
+  User.associate = (models) => {
+    User.hasOne(models.Agreement, {
+      foreignKey: {
+        name: 'userId',
+        field: 'user_id',
+      },
+    });
+  };
 
   // return this created User model
   return User;

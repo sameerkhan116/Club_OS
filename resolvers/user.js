@@ -2,10 +2,24 @@ import formatErrors from '../formatErrors';
 
 export default {
   Query: {
-    allUsers: (parent, args, { models }) =>
-      models.User.findAll(),
+    allUsers: async (parent, args, { models }) =>
+      models.User.findAll({
+        include: [{
+          model: models.Agreement,
+          attributes: ['status'],
+        }],
+      }),
     user: (parent, { id }, { models }) =>
       models.User.findOne({ where: { id } }),
+    statusUsers: (parent, { type }, { models }) => models.User.findAll({
+      include: [{
+        model: models.Agreement,
+        attributes: ['status'],
+        where: {
+          status: type,
+        },
+      }],
+    }),
   },
   Mutation: {
     register: async (parent, args, { models }) => {

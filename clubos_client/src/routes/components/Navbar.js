@@ -15,7 +15,13 @@ export default class Navbar extends Component {
       <Menu inverted size="huge">
         <Container>
           <Menu.Item>
-            <Image size="tiny" src="https://www.club-os.com/hubfs/Website%20Images/logo-white.png?t=1524854663136" alt="ClubOS" />
+            <Image
+              as={Link}
+              to="/"
+              size="tiny"
+              src="https://www.club-os.com/hubfs/Website%20Images/logo-white.png?t=1524854663136"
+              alt="ClubOS"
+            />
           </Menu.Item>
           <Menu.Item
             name="home"
