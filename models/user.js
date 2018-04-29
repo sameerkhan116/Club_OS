@@ -86,7 +86,6 @@ export default(sequelize, DataTypes) => {
       },
     },
     createdAt: DataTypes.DATEONLY,
-    status: DataTypes.STRING,
   });
 
   User.associate = (models) => {
